@@ -874,9 +874,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gameContainer.innerHTML = `
       <header>
         <h2>${challenge.title}</h2>
-        <div class="progress-container">
-          <div class="progress-bar" style="width: ${Math.min(100, (challenge.rank || 1) / 3 * 100)}%"></div>
-        </div>
       </header>
       
       <main>
@@ -898,7 +895,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <button id="reset-challenge">Reset</button>
         <button id="select-challenge">Select</button>
         <div class="rank-stats">
-          <span>Rank: ${challenge.rank}/3 Tables - R1: ${rankCounts[1]}, R2: ${rankCounts[2]}, R3: ${rankCounts[3]}, Ignored: ${rankCounts.ignored}</span>
+          <span>
+            Challenge: 
+            <span class="rank-card ${challenge.rank === 1 ? 'rank-bronze' : challenge.rank === 2 ? 'rank-silver' : 'rank-gold'}">${challenge.rank}</span>
+            | 
+            <span class="rank-bronze rank-card">1</span> ${rankCounts[1]} 
+            <span class="rank-silver rank-card">2</span> ${rankCounts[2]} 
+            <span class="rank-gold rank-card">3</span> ${rankCounts[3] + rankCounts.ignored}
+          </span>
         </div>
       </div>
       
@@ -950,8 +954,14 @@ document.addEventListener('DOMContentLoaded', () => {
         challenge.ignored = true;
         gameState.ignoredChallenges.push(challenge.id);
         
+        // Set challenge to gold rank (3) directly instead of just ignoring
+        challenge.rank = 3;
+        
         // Remove from current challenges
         gameState.challenges.splice(gameState.currentChallengeIndex, 1);
+        
+        // Add to completed challenges
+        gameState.completedChallenges.push(challenge.id);
         
         // Save to local storage
         saveChallengeRanks(gameState);

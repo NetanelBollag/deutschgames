@@ -80,9 +80,6 @@ describe('Game UI Rendering', () => {
         <div class="rank-score">
           <span>0</span>
         </div>
-        <div class="progress-container">
-          <div class="progress-bar" style="width: ${Math.min(100, (challenge.rank || 1) / 3 * 100)}%"></div>
-        </div>
       </header>
       
       <main>

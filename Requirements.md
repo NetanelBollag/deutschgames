@@ -39,9 +39,13 @@ A simple drag-and-drop game for practicing German case declensions (Nominative, 
 
 ## Ranking System
 - All challenges start with rank 1
+- Ranks are visually presented as numbered cards with different colors:
+  - Rank 1: Bronze card with number 1
+  - Rank 2: Silver card with number 2
+  - Rank 3: Gold card with number 3
 - After completing a challenge, its rank increases by 1
-- Challenges at rank 3, once completed, will not be shown again
-- An "Ignore me" button allows users to move a challenge directly to an ignored list
+- Challenges at rank 3 (gold), once completed, will not be shown again
+- An "Ignore me" button allows users to move a challenge directly to gold (rank 3)
 - Challenge selection feature for users to choose specific challenges
 
 ## Error Handling

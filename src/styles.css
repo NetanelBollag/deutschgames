@@ -19,6 +19,9 @@
   --border-radius: 8px;
   --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   --transition: all 0.15s cubic-bezier(0.2, 0, 0.1, 1);
+  --bronze-color: #cd7f32;
+  --silver-color: #c0c0c0;
+  --gold-color: #ffd700;
 }
 
 body {
@@ -204,6 +207,33 @@ main {
   20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
+/* Styling for rank cards */
+.rank-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin: 0 0.2rem;
+  color: var(--light-text);
+}
+
+.rank-bronze {
+  background-color: var(--bronze-color);
+}
+
+.rank-silver {
+  background-color: var(--silver-color);
+}
+
+.rank-gold {
+  background-color: var(--gold-color);
+  color: var(--text-color);
+}
+
 /* Styling for .rank-stats - old class renamed and updated location */
 .rank-stats {
   display: flex;
@@ -267,20 +297,11 @@ main {
 
 /* Progress indicator */
 .progress-container {
-  height: 4px;
-  background-color: rgba(255,255,255,0.2);
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  display: none; /* Hide the progress bar */
 }
 
 .progress-bar {
-  height: 100%;
-  background: var(--accent-color);
-  border-radius: 0;
-  transition: width 0.3s ease;
+  display: none; /* Hide the progress bar */
 }
 
 /* Touch-specific styles */
@@ -625,10 +646,7 @@ body.touch-device .draggable-card {
   color: #2196F3;
 }
 
+/* Removing footer styling by setting display to none */
 footer {
-  padding: 0.5rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-color);
-  margin-top: 0;
+  display: none;
 }

@@ -30,7 +30,7 @@ export const saveChallengeRanks = (gameState: GameState) => {
   gameState.ignoredChallenges.forEach(id => {
     if (!challengeData[id]) {
       challengeData[id] = {
-        rank: 1,
+        rank: 3,
         ignored: true
       };
     }
