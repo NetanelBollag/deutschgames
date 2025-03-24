@@ -1557,6 +1557,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.removeChild(clone);
       }
       
+      // Get touch position
+      const touch = e.changedTouches[0];
+      const touchMoved = Math.abs(touch.clientX - draggedItem.getBoundingClientRect().left) > 10 || 
+                         Math.abs(touch.clientY - draggedItem.getBoundingClientRect().top) > 10;
+      
       // Handle drop if over a drop zone
       if (currentDropZone) {
         currentDropZone.classList.remove('active');
@@ -1564,6 +1569,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const gender = draggedItem.dataset.gender || '';
         const caseType = draggedItem.dataset.case || '';
         handleDrop(currentDropZone, article, gender, caseType);
+      } 
+      // If touch didn't move much (it was a tap, not a drag), auto-place in first available spot
+      else if (!touchMoved) {
+        const dropZones = document.querySelectorAll('.drop-zone');
+        const availableZone = Array.from(dropZones).find(
+          zone => !zone.querySelector('.draggable-card')
+        ) as HTMLElement;
+        
+        if (availableZone) {
+          const article = draggedItem.dataset.article || '';
+          const gender = draggedItem.dataset.gender || '';
+          const caseType = draggedItem.dataset.case || '';
+          
+          handleDrop(availableZone, article, gender, caseType);
+        }
       }
       
       // Reset state
