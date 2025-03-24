@@ -16,12 +16,14 @@ export const shuffleArray = <T>(array: T[]): T[] => {
  * Save challenge ranks to local storage
  */
 export const saveChallengeRanks = (gameState: GameState) => {
-  const challengeData: StoredChallengeData = {};
+  // First, load existing challenge data from local storage
+  const savedData = localStorage.getItem(STORAGE_KEYS.CHALLENGE_RANKS);
+  const challengeData: StoredChallengeData = savedData ? JSON.parse(savedData) : {};
   
   // Save all challenges including those not in the current rotation
   gameState.challenges.forEach(challenge => {
     challengeData[challenge.id] = {
-      rank: challenge.rank || 1,
+      rank: challenge.rank !== undefined ? challenge.rank : 0,
       ignored: challenge.ignored || false
     };
   });

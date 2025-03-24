@@ -27,7 +27,7 @@ export interface Challenge {
   };
   correctAnswers: Article[];
   languageDirection: 'germanToHebrew' | 'hebrewToGerman';
-  rank?: number; // Challenge rank from 1-3
+  rank?: number; // Challenge rank from 0-3
   ignored?: boolean; // Whether this challenge is ignored
   onLoad?: () => void; // Optional callback when challenge is loaded
   customValidation?: (zoneGender: string, zoneCase: string, article: string) => boolean; // Custom validation logic

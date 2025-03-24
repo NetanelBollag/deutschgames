@@ -42,6 +42,11 @@
   transition: all 0.5s ease;
 }
 
+.progress-initial {
+  background-color: #f0f0f0;
+  height: 100%;
+}
+
 .progress-bronze {
   background-color: var(--bronze-color);
   height: 100%;
@@ -245,21 +250,29 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  font-weight: bold;
+  color: var(--text-color);
   font-size: 0.8rem;
-  margin: 0 0.2rem;
-  color: var(--light-text);
+  font-weight: bold;
+  margin: 0 2px;
+  border: 1px solid #ccc;
+}
+
+.rank-initial {
+  background-color: white;
+  color: #888;
 }
 
 .rank-bronze {
   background-color: var(--bronze-color);
+  color: white;
 }
 
 .rank-silver {
   background-color: var(--silver-color);
+  color: var(--text-color);
 }
 
 .rank-gold {
@@ -308,9 +321,10 @@ main {
 }
 
 #ignore-challenge {
-  background-color: transparent;
+  background-color: #E0E0E0;
   color: var(--text-color);
   padding: 0.6rem 1rem;
+  min-width: 150px;
 }
 
 #reset-challenge {

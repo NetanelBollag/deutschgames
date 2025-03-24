@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize game state
   const initializeGameState = (): GameState => {
-    // Initialize all challenges with rank 1 by default
+    // Initialize all challenges with rank 0 by default
     const challenges = createChallenges();
     
     // Load saved challenge ranks from local storage
@@ -693,7 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
         challenge.rank = challengeData[challenge.id].rank;
         challenge.ignored = challengeData[challenge.id].ignored;
       } else {
-        challenge.rank = 1;
+        challenge.rank = 0;
         challenge.ignored = false;
       }
     });
@@ -701,12 +701,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize game state
     return {
       currentChallengeIndex: 0,
-      challenges: shuffleArray(challenges.filter(c => !c.ignored && (c.rank || 1) < 3)),
+      challenges: shuffleArray(challenges.filter(c => !c.ignored && (c.rank || 0) < 3)),
       score: 0,
       totalAttempts: 0,
       correctAttempts: 0,
       ignoredChallenges: challenges.filter(c => c.ignored).map(c => c.id),
-      completedChallenges: challenges.filter(c => (c.rank || 1) >= 3 && !c.ignored).map(c => c.id)
+      completedChallenges: challenges.filter(c => (c.rank || 0) >= 3 && !c.ignored).map(c => c.id)
     };
   };
   
@@ -786,6 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameContainer.innerHTML = `
         <div class="progress-bar-container">
           <div class="progress-bar">
+            <div class="progress-initial" style="width: 0%"></div>
             <div class="progress-bronze" style="width: 0%"></div>
             <div class="progress-silver" style="width: 0%"></div>
             <div class="progress-gold" style="width: 100%"></div>
@@ -815,6 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Calculate counts by rank
     const rankCounts: Record<string | number, number> = {
+      0: 0,
       1: 0,
       2: 0,
       3: 0,
@@ -828,15 +830,16 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (savedData[c.id] && savedData[c.id].ignored) {
         rankCounts.ignored++;
-      } else if (savedData[c.id] && savedData[c.id].rank) {
+      } else if (savedData[c.id] && savedData[c.id].rank !== undefined) {
         rankCounts[savedData[c.id].rank]++;
       } else {
-        rankCounts[1]++; // Default rank is 1
+        rankCounts[0]++; // Default rank is 0
       }
     });
     
     // Calculate progress percentages
-    const totalChallenges = rankCounts[1] + rankCounts[2] + rankCounts[3] + rankCounts.ignored;
+    const totalChallenges = rankCounts[0] + rankCounts[1] + rankCounts[2] + rankCounts[3] + rankCounts.ignored;
+    const initialPercent = (rankCounts[0] / totalChallenges) * 100;
     const bronzePercent = (rankCounts[1] / totalChallenges) * 100;
     const silverPercent = (rankCounts[2] / totalChallenges) * 100;
     const goldPercent = ((rankCounts[3] + rankCounts.ignored) / totalChallenges) * 100;
@@ -887,6 +890,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gameContainer.innerHTML = `
       <div class="progress-bar-container">
         <div class="progress-bar">
+          <div class="progress-initial" style="width: ${initialPercent}%"></div>
           <div class="progress-bronze" style="width: ${bronzePercent}%"></div>
           <div class="progress-silver" style="width: ${silverPercent}%"></div>
           <div class="progress-gold" style="width: ${goldPercent}%"></div>
@@ -912,14 +916,14 @@ document.addEventListener('DOMContentLoaded', () => {
       </main>
       
       <div class="game-controls">
-        <button id="ignore-challenge">Ignore</button>
-        <button id="reset-challenge">Reset</button>
-        <button id="select-challenge">Select</button>
+        <button id="ignore-challenge">I already know it</button>
+        <button id="reset-challenge">Reset this</button>
+        <button id="select-challenge">Jump to...</button>
         <div class="rank-stats">
           <span>
             Challenge: 
-            <span class="rank-card ${challenge.rank === 1 ? 'rank-bronze' : challenge.rank === 2 ? 'rank-silver' : 'rank-gold'}">${challenge.rank}</span>
-            | 
+            <span class="rank-card ${challenge.rank === 0 ? 'rank-initial' : challenge.rank === 1 ? 'rank-bronze' : challenge.rank === 2 ? 'rank-silver' : 'rank-gold'}">${challenge.rank}</span>
+            | Completed cards: 
             <span class="rank-bronze rank-card">1</span> ${rankCounts[1]} 
             <span class="rank-silver rank-card">2</span> ${rankCounts[2]} 
             <span class="rank-gold rank-card">3</span> ${rankCounts[3] + rankCounts.ignored}
@@ -949,7 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
               statusText = '✓ Completed';
             } else if (isIgnored) {
               statusClass = 'status-ignored';
-              statusText = '✗ Ignored';
+              statusText = '✗ Already known';
             } else if (isCurrent) {
               statusClass = 'status-current';
               statusText = '▶ Current';
@@ -1103,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameState.currentChallengeIndex = existingIndex;
               } else {
                 // Challenge doesn't exist in current set, add it
-                const loadedChallenge = { ...selectedChallenge, rank: 1, ignored: false };
+                const loadedChallenge = { ...selectedChallenge, rank: 0, ignored: false };
                 gameState.challenges.push(loadedChallenge);
                 gameState.currentChallengeIndex = gameState.challenges.length - 1;
                 
@@ -1394,7 +1398,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const challenge = gameState.challenges[gameState.currentChallengeIndex];
       
       // Increment rank of completed challenge
-      if (challenge.rank) {
+      if (challenge.rank !== undefined) {
         challenge.rank++;
         
         // If rank is 3, remove from challenges and add to completed
@@ -1402,6 +1406,8 @@ document.addEventListener('DOMContentLoaded', () => {
           gameState.completedChallenges.push(challenge.id);
           gameState.challenges.splice(gameState.currentChallengeIndex, 1);
         }
+      } else {
+        challenge.rank = 1; // Move from 0 to 1
       }
       
       // Save to local storage
@@ -1432,35 +1438,57 @@ document.addEventListener('DOMContentLoaded', () => {
   const setupDragAndDrop = () => {
     const cards = document.querySelectorAll('.draggable-card');
     const dropZones = document.querySelectorAll('.drop-zone');
+    const cardContainer = document.querySelector('.card-container');
     
     // Clean up any previous handlers
     draggedItem = null;
     touchActive = false;
     currentDropZone = null;
     
-    // DESKTOP FUNCTIONALITY
-    cards.forEach(card => {
-      // Simple click handler for desktop only
-      card.addEventListener('click', (e) => {
-        // Skip if we're on a touch device
-        if (isTouchDevice()) return;
-        
-        const cardEl = card as HTMLElement;
+    // Remove any existing event listeners (cleaner approach)
+    if (cardContainer) {
+      const newCardContainer = cardContainer.cloneNode(true);
+      cardContainer.parentNode?.replaceChild(newCardContainer, cardContainer);
+    }
+    
+    // Add single event listener on the card container using event delegation
+    // This handles all card clicks in one place, simplifying the code
+    document.querySelector('.card-container')?.addEventListener('click', (e) => {
+      // Stop event from bubbling to document
+      e.stopPropagation();
+      e.preventDefault();
+      
+      // Find if we clicked on a card
+      let target = e.target as HTMLElement;
+      
+      // Walk up the DOM to find the card if we clicked on something inside it
+      while (target && !target.classList.contains('draggable-card') && target !== e.currentTarget) {
+        target = target.parentElement as HTMLElement;
+      }
+      
+      // If we found a card
+      if (target && target.classList.contains('draggable-card')) {
+        console.log('Card clicked via delegation:', target.textContent?.trim());
         
         // Find the first empty drop zone
-        const availableZone = Array.from(dropZones).find(
+        const emptyDropZones = Array.from(dropZones).filter(
           zone => !zone.querySelector('.draggable-card')
-        ) as HTMLElement;
+        );
         
-        if (availableZone) {
-          const article = cardEl.dataset.article || '';
-          const gender = cardEl.dataset.gender || '';
-          const caseType = cardEl.dataset.case || '';
+        if (emptyDropZones.length > 0) {
+          const firstEmptyZone = emptyDropZones[0] as HTMLElement;
+          const article = target.dataset.article || '';
+          const gender = target.dataset.gender || '';
+          const caseType = target.dataset.case || '';
           
-          handleDrop(availableZone, article, gender, caseType);
+          // Use handleDrop to place the card
+          handleDrop(firstEmptyZone, article, gender, caseType);
         }
-      });
-      
+      }
+    }, { capture: true });
+    
+    // DESKTOP DRAG FUNCTIONALITY
+    cards.forEach(card => {
       // Drag start (desktop)
       card.addEventListener('dragstart', (e) => {
         const dragEvent = e as DragEvent;
@@ -1483,22 +1511,70 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchStartY = 0;
     let isTap = false;
     
-    // Touch start on card
-    cards.forEach(card => {
-      card.addEventListener('touchstart', (e: Event) => {
-         const touchEvent = e as TouchEvent;
-         const touch = touchEvent.touches[0];
-         touchStartX = touch.clientX;
-         touchStartY = touch.clientY;
-         isTap = true;
-         draggedItem = card as HTMLElement;
-         
-         // Prevent default only if this becomes a drag
-         // We'll do this in touchmove
-        });
-      });
+    // Touch handling using event delegation
+    const cardContainerEl = document.querySelector('.card-container');
     
-    // Touch move anywhere
+    // Touch start on container with delegation
+    cardContainerEl?.addEventListener('touchstart', (e: Event) => {
+      const touchEvent = e as TouchEvent;
+      const touch = touchEvent.touches[0];
+      
+      // Find if we touched on a card
+      let target = touchEvent.target as HTMLElement;
+      
+      // Walk up the DOM to find the card if we touched something inside it
+      while (target && !target.classList.contains('draggable-card') && target !== cardContainerEl) {
+        target = target.parentElement as HTMLElement;
+      }
+      
+      // If we found a card
+      if (target && target.classList.contains('draggable-card')) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        isTap = true;
+        draggedItem = target;
+        
+        console.log('Touch start on card (delegation):', draggedItem.textContent?.trim());
+      }
+    }, { passive: false, capture: true });
+    
+    // Touch end on container with delegation
+    cardContainerEl?.addEventListener('touchend', (e: Event) => {
+      const touchEvent = e as TouchEvent;
+      
+      // Only handle if we're tracking a dragged item
+      if (draggedItem && isTap) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        console.log('Touch end on card (delegation):', draggedItem.textContent?.trim());
+        
+        // Find the first empty drop zone
+        const emptyDropZones = Array.from(dropZones).filter(
+          zone => !zone.querySelector('.draggable-card')
+        );
+        
+        if (emptyDropZones.length > 0) {
+          const firstEmptyZone = emptyDropZones[0] as HTMLElement;
+          const article = draggedItem.dataset.article || '';
+          const gender = draggedItem.dataset.gender || '';
+          const caseType = draggedItem.dataset.case || '';
+          
+          // Use handleDrop to place the card
+          handleDrop(firstEmptyZone, article, gender, caseType);
+          
+          // Reset state
+          draggedItem.classList.remove('dragging');
+          draggedItem = null;
+          isTap = false;
+        }
+      }
+    }, { passive: false, capture: true });
+    
+    // Touch move on document - needed for drag operations
     document.addEventListener('touchmove', (e) => {
       if (!draggedItem) return;
       
@@ -1528,48 +1604,35 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     
-    // Touch end anywhere
+    // Touch end on document - needed for drag operations
     document.addEventListener('touchend', (e) => {
-      if (!draggedItem) return;
+      if (!draggedItem || !touchActive) return;
       
       if (currentDropZone) {
         currentDropZone.classList.remove('active');
       }
       
-      // If this was a tap (not moved much), place in first available zone
-      if (isTap) {
-        const availableZone = Array.from(dropZones).find(
-          zone => !zone.querySelector('.draggable-card')
-        ) as HTMLElement;
-        
-        if (availableZone) {
-          const article = draggedItem.dataset.article || '';
-          const gender = draggedItem.dataset.gender || '';
-          const caseType = draggedItem.dataset.case || '';
-          
-          handleDrop(availableZone, article, gender, caseType);
-        }
-      } 
-      // If this was a drag and ended over a drop zone, place it there
-      else if (touchActive && currentDropZone) {
+      // Only handle drag operations here (taps are handled by the container handler)
+      if (currentDropZone) {
+        // If drag ended over a drop zone, place it there
         const article = draggedItem.dataset.article || '';
         const gender = draggedItem.dataset.gender || '';
         const caseType = draggedItem.dataset.case || '';
         
         handleDrop(currentDropZone, article, gender, caseType);
-      }
-      // If drag ended outside a drop zone, find first available
-      else if (touchActive) {
-        const availableZone = Array.from(dropZones).find(
+      } else {
+        // If drag ended outside a drop zone, find first available
+        const emptyDropZones = Array.from(dropZones).filter(
           zone => !zone.querySelector('.draggable-card')
-        ) as HTMLElement;
+        );
         
-        if (availableZone) {
+        if (emptyDropZones.length > 0) {
+          const firstEmptyZone = emptyDropZones[0] as HTMLElement;
           const article = draggedItem.dataset.article || '';
           const gender = draggedItem.dataset.gender || '';
           const caseType = draggedItem.dataset.case || '';
           
-          handleDrop(availableZone, article, gender, caseType);
+          handleDrop(firstEmptyZone, article, gender, caseType);
         }
       }
       
