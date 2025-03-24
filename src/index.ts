@@ -982,22 +982,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set challenge to gold rank (3) directly instead of just ignoring
         challenge.rank = 3;
         
-        // Remove from current challenges
-        gameState.challenges.splice(gameState.currentChallengeIndex, 1);
-        
-        // Add to completed challenges
-        gameState.completedChallenges.push(challenge.id);
-        
-        // Save to local storage
-        saveChallengeRanks(gameState);
-        
-        // If we've removed the last challenge, reset the index
-        if (gameState.currentChallengeIndex >= gameState.challenges.length) {
-          gameState.currentChallengeIndex = 0;
+        // Update the rank card display to show gold immediately
+        const rankCard = document.querySelector('.rank-stats .rank-card');
+        if (rankCard) {
+          rankCard.className = 'rank-card rank-gold';
+          rankCard.textContent = '3';
         }
         
-        // Render the next challenge
-        renderChallenge();
+        // Add a visual indicator that the challenge is now complete
+        const header = document.querySelector('header h2');
+        if (header) {
+          header.innerHTML += ' <span class="completion-indicator">✓</span>';
+          
+          // Add style for the completion indicator if not already present
+          if (!document.getElementById('completion-indicator-style')) {
+            const style = document.createElement('style');
+            style.id = 'completion-indicator-style';
+            style.textContent = `
+              .completion-indicator {
+                color: gold;
+                font-weight: bold;
+                animation: pulse 0.5s ease-in-out;
+              }
+              @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.5); }
+                100% { transform: scale(1); }
+              }
+            `;
+            document.head.appendChild(style);
+          }
+        }
+        
+        // Short delay to show the gold state before moving on
+        setTimeout(() => {
+          // Remove from current challenges
+          gameState.challenges.splice(gameState.currentChallengeIndex, 1);
+          
+          // Add to completed challenges
+          gameState.completedChallenges.push(challenge.id);
+          
+          // Save to local storage
+          saveChallengeRanks(gameState);
+          
+          // If we've removed the last challenge, reset the index
+          if (gameState.currentChallengeIndex >= gameState.challenges.length) {
+            gameState.currentChallengeIndex = 0;
+          }
+          
+          // Render the next challenge
+          renderChallenge();
+        }, 800);
       });
     }
     
