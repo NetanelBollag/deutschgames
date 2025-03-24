@@ -784,6 +784,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gameState.challenges.length === 0) {
       // No more challenges to show
       gameContainer.innerHTML = `
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div class="progress-bronze" style="width: 0%"></div>
+            <div class="progress-silver" style="width: 0%"></div>
+            <div class="progress-gold" style="width: 100%"></div>
+          </div>
+        </div>
         <div class="game-complete">
           <h2>All challenges completed!</h2>
           <p>Correct attempts: ${gameState.correctAttempts} / ${gameState.totalAttempts}</p>
@@ -827,6 +834,12 @@ document.addEventListener('DOMContentLoaded', () => {
         rankCounts[1]++; // Default rank is 1
       }
     });
+    
+    // Calculate progress percentages
+    const totalChallenges = rankCounts[1] + rankCounts[2] + rankCounts[3] + rankCounts.ignored;
+    const bronzePercent = (rankCounts[1] / totalChallenges) * 100;
+    const silverPercent = (rankCounts[2] / totalChallenges) * 100;
+    const goldPercent = ((rankCounts[3] + rankCounts.ignored) / totalChallenges) * 100;
     
     // Call the onLoad function if it exists
     if (challenge.onLoad) {
@@ -872,6 +885,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Render the challenge
     gameContainer.innerHTML = `
+      <div class="progress-bar-container">
+        <div class="progress-bar">
+          <div class="progress-bronze" style="width: ${bronzePercent}%"></div>
+          <div class="progress-silver" style="width: ${silverPercent}%"></div>
+          <div class="progress-gold" style="width: ${goldPercent}%"></div>
+        </div>
+      </div>
+      
       <header>
         <h2>${challenge.title}</h2>
       </header>

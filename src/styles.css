@@ -24,6 +24,39 @@
   --gold-color: #ffd700;
 }
 
+/* Progress Bar Styles */
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition: all 0.5s ease;
+}
+
+.progress-bronze {
+  background-color: var(--bronze-color);
+  height: 100%;
+}
+
+.progress-silver {
+  background-color: var(--silver-color);
+  height: 100%;
+}
+
+.progress-gold {
+  background-color: var(--gold-color);
+  height: 100%;
+}
+
 body {
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
   line-height: 1.6;
@@ -300,10 +333,6 @@ main {
   display: none; /* Hide the progress bar */
 }
 
-.progress-bar {
-  display: none; /* Hide the progress bar */
-}
-
 /* Touch-specific styles */
 #touch-clone {
   transform: scale(1.1);
@@ -322,86 +351,81 @@ body.touch-device .draggable-card {
 /* Mobile optimizations */
 @media (max-width: 600px) {
   main {
-    padding: 0.4rem;
+    padding: 0.5rem;
+  }
+  
+  .progress-bar-container {
+    height: 8px;
   }
   
   header {
-    padding: 0.5rem 0.4rem;
+    padding: 0.5rem;
   }
   
   header h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   
   .game-table-container {
-    max-width: 240px;
-    margin: 0.3rem auto 0.6rem;
+    margin: 0.4rem auto;
+    max-width: 95%;
   }
   
   .game-table th, .game-table td {
-    padding: 0.5rem 0.3rem;
-    font-size: 0.85rem;
+    padding: 0.6rem 0.3rem;
+    font-size: 0.9rem;
   }
   
   .game-table th {
-    width: 65px;
+    width: 60px;
+    padding: 0.4rem 0.2rem;
     font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  /* Special width for "You (informal)" column on medium screens */
   .game-table th[data-label="You (informal)"] {
-    width: 90px;
+    width: 80px;
   }
   
   .drop-zone {
-    height: 44px;
+    height: 48px;
   }
   
   .card-container {
-    gap: 0.5rem;
-    max-width: 240px;
+    gap: 0.4rem;
+    max-width: 95%;
     padding: 0.6rem 0;
   }
   
   .draggable-card {
-    padding: 0.5rem 0.8rem;
-    min-height: 36px;
+    padding: 0.6rem 0.8rem;
+    min-height: 42px;
     min-width: 50px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
   
   .game-controls {
-    padding: 0.4rem;
-    gap: 0.4rem;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   
   .game-controls button {
-    padding: 0.5rem 0.8rem;
-    min-width: 80px;
-    font-size: 0.85rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
   
   .rank-stats {
     font-size: 0.8rem;
     margin-top: 0.4rem;
-    margin-bottom: 0;
   }
   
   .challenge-selector {
-    padding: 0.8rem;
-    max-width: 90%;
-    width: 280px;
-  }
-  
-  .challenge-selector h3 {
-    margin-bottom: 0.8rem;
-    font-size: 1.1rem;
-  }
-  
-  .challenge-selector input {
-    padding: 0.4rem;
-    margin-bottom: 0.8rem;
-    font-size: 0.9rem;
+    max-width: 95%;
+    max-height: 80vh;
   }
   
   .challenge-item {
@@ -411,65 +435,61 @@ body.touch-device .draggable-card {
   .challenge-title {
     font-size: 0.9rem;
   }
-  
-  .challenge-details {
-    font-size: 0.75rem;
-  }
-  
-  footer {
-    padding: 0.3rem;
-    font-size: 0.8rem;
-  }
 }
 
 /* Extra small devices (phones under 400px) */
 @media (max-width: 400px) {
+  .progress-bar-container {
+    height: 6px;
+  }
+  
   .game-table-container {
-    max-width: 220px;
+    margin: 0.3rem auto;
+    max-width: 100%;
   }
   
   .card-container {
-    max-width: 220px;
-    gap: 0.4rem;
+    gap: 0.3rem;
+    max-width: 100%;
+    padding: 0.5rem 0;
   }
   
   .game-table th {
-    width: 60px;
+    width: 50px;
+    padding: 0.3rem 0.15rem;
     font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  /* Special width for "You (informal)" column on small screens */
   .game-table th[data-label="You (informal)"] {
-    width: 80px;
+    width: 70px;
   }
   
   .game-table td {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.2rem;
+    padding: 0.4rem 0.25rem;
   }
   
   .drop-zone {
-    height: 40px;
-    word-break: break-word;
+    height: 42px;
   }
   
   .draggable-card {
-    padding: 0.4rem 0.7rem;
-    min-height: 32px;
+    padding: 0.5rem 0.7rem;
+    min-height: 38px;
     min-width: 45px;
-    font-size: 0.8rem;
-    word-break: break-word;
+    font-size: 0.85rem;
   }
   
   .game-controls button {
-    padding: 0.4rem 0.7rem;
-    min-width: 70px;
-    font-size: 0.8rem;
+    padding: 0.4rem;
+    font-size: 0.85rem;
   }
   
   .challenge-selector {
-    padding: 0.6rem;
-    width: 260px;
+    max-width: 100%;
+    border-radius: var(--border-radius);
   }
   
   .challenge-item {
