@@ -1293,6 +1293,28 @@ document.addEventListener('DOMContentLoaded', () => {
         cardClone.classList.add('incorrect');
         zone.classList.add('incorrect');
         
+        // Add enhanced error animation
+        cardClone.style.animation = 'error-pulse 0.6s ease-in-out 3';
+        
+        // Add keyframe animation if not already in document
+        if (!document.getElementById('error-animation-style')) {
+          const style = document.createElement('style');
+          style.id = 'error-animation-style';
+          style.textContent = `
+            @keyframes error-pulse {
+              0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.5); }
+              50% { transform: scale(1.1); box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); }
+              100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 0, 0, 0.5); }
+            }
+            .incorrect {
+              background-color: #ffcccc !important;
+              color: #cc0000 !important;
+              border: 2px solid #cc0000 !important;
+            }
+          `;
+          document.head.appendChild(style);
+        }
+        
         console.log('Incorrect answer:', {
           expected: expectedValue,
           received: article,
