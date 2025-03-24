@@ -38,18 +38,19 @@ A simple drag-and-drop game for practicing German case declensions (Nominative, 
 - Support for different challenge types (articles, pronouns, verbs)
 
 ## Ranking System
-- All challenges start with rank 0
+- All challenges start with rank 0 (white/light-grey)
 - Ranks are visually presented as numbered cards with different colors:
+  - Rank 0: White/light-grey
   - Rank 1: Bronze card with number 1
   - Rank 2: Silver card with number 2
   - Rank 3: Gold card with number 3
 - After completing a challenge, its rank increases by 1
 - A challenge at rank 0, once completed, will move to rank 1 (bronze)
 - Challenges at rank 3 (gold), once completed, will not be shown again
-- An "Ignore me" button allows users to move a challenge directly to gold (rank 3)
+- An "I already know it" button allows users to move a challenge directly to gold (rank 3)
 - Challenge selection feature for users to choose specific challenges
-- The progress bar starts white-light-grey
-- The footer displays "Completed cards: " followed by rank numbers circled with their respective colors
+- The progress bar starts white/light-grey for rank 0 challenges
+- The footer displays "Completed cards: " followed by rank numbers (1, 2, 3) circled with their respective colors
 
 ## Error Handling
 - Clearly display expected values when incorrect answers are provided
