@@ -1392,6 +1392,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Desktop drag and drop events
     cards.forEach(card => {
+      // Click-to-place functionality (new)
+      card.addEventListener('click', () => {
+        // Skip if card is already being dragged
+        if (card.classList.contains('dragging')) return;
+        
+        // Find the first empty drop zone
+        const availableZone = Array.from(dropZones).find(
+          zone => !zone.querySelector('.draggable-card')
+        ) as HTMLElement;
+        
+        if (availableZone) {
+          const cardEl = card as HTMLElement;
+          const article = cardEl.dataset.article || '';
+          const gender = cardEl.dataset.gender || '';
+          const caseType = cardEl.dataset.case || '';
+          
+          // Use existing drop handling
+          handleDrop(availableZone, article, gender, caseType);
+        }
+      });
+
       // Drag events (for desktop)
       card.addEventListener('dragstart', (e) => {
         const dragEvent = e as DragEvent;
