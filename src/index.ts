@@ -3,16 +3,11 @@ import { Challenge, GameState, STORAGE_KEYS, StoredChallengeData } from './types
 import { definiteArticles, indefiniteArticles } from './data/articles';
 import { possessivePronouns, personalPronouns, demonstrativePronouns, reflexivePronouns } from './data/pronouns';
 import { pastTenseRegular, pastTenseIrregular, conditional, modalVerbs, futureTense, futurePerfectHaben, futurePerfectSein, seinAllTenses } from './data/verbs';
+import { shuffleArray, saveChallengeRanks, isTouchDevice, isGameChallengeComplete, getTouchDropZone } from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameContainer = document.getElementById('game-container');
   if (!gameContainer) return;
-  
-  // Helper function to detect if we're on a touch device
-  const isTouchDevice = () => {
-    return ('ontouchstart' in window) || 
-      (navigator.maxTouchPoints > 0);
-  };
   
   // Set a class on the body for touch devices
   if (isTouchDevice()) {
@@ -715,51 +710,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   };
   
-  // Fisher-Yates shuffle algorithm for randomizing challenges
-  const shuffleArray = <T>(array: T[]): T[] => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  };
-  
-  // Save challenge ranks to local storage
-  const saveChallengeRanks = (gameState: GameState) => {
-    const challengeData: StoredChallengeData = {};
-    
-    // Save all challenges including those not in the current rotation
-    gameState.challenges.forEach(challenge => {
-      challengeData[challenge.id] = {
-        rank: challenge.rank || 1,
-        ignored: challenge.ignored || false
-      };
-    });
-    
-    // Add ignored challenges
-    gameState.ignoredChallenges.forEach(id => {
-      if (!challengeData[id]) {
-        challengeData[id] = {
-          rank: 1,
-          ignored: true
-        };
-      }
-    });
-    
-    // Add completed challenges
-    gameState.completedChallenges.forEach(id => {
-      if (!challengeData[id]) {
-        challengeData[id] = {
-          rank: 3,
-          ignored: false
-        };
-      }
-    });
-    
-    localStorage.setItem(STORAGE_KEYS.CHALLENGE_RANKS, JSON.stringify(challengeData));
-  };
-  
   // Initialize game state
   let gameState = initializeGameState();
   
@@ -1424,17 +1374,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let touchActive = false;
   let currentDropZone: HTMLElement | null = null;
   let rafId: number | null = null;
-  
-  // Helper function to find the drop zone element under touch point
-  const getTouchDropZone = (x: number, y: number) => {
-    const elements = document.elementsFromPoint(x, y);
-    for (const el of elements) {
-      if (el.classList.contains('drop-zone')) {
-        return el as HTMLElement;
-      }
-    }
-    return null;
-  };
   
   // Setup drag and drop functionality
   const setupDragAndDrop = () => {
