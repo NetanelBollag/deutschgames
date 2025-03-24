@@ -1433,12 +1433,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.draggable-card');
     const dropZones = document.querySelectorAll('.drop-zone');
     
-    // Desktop drag and drop events
+    // Clean up any previous handlers
+    draggedItem = null;
+    touchActive = false;
+    currentDropZone = null;
+    
+    // DESKTOP FUNCTIONALITY
     cards.forEach(card => {
-      // Click-to-place functionality (new)
-      card.addEventListener('click', () => {
-        // Skip if card is already being dragged
-        if (card.classList.contains('dragging')) return;
+      // Simple click handler for desktop only
+      card.addEventListener('click', (e) => {
+        // Skip if we're on a touch device
+        if (isTouchDevice()) return;
+        
+        const cardEl = card as HTMLElement;
         
         // Find the first empty drop zone
         const availableZone = Array.from(dropZones).find(
@@ -1446,17 +1453,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ) as HTMLElement;
         
         if (availableZone) {
-          const cardEl = card as HTMLElement;
           const article = cardEl.dataset.article || '';
           const gender = cardEl.dataset.gender || '';
           const caseType = cardEl.dataset.case || '';
           
-          // Use existing drop handling
           handleDrop(availableZone, article, gender, caseType);
         }
       });
-
-      // Drag events (for desktop)
+      
+      // Drag start (desktop)
       card.addEventListener('dragstart', (e) => {
         const dragEvent = e as DragEvent;
         draggedItem = card as HTMLElement;
@@ -1466,113 +1471,95 @@ document.addEventListener('DOMContentLoaded', () => {
         card.classList.add('dragging');
       });
       
+      // Drag end (desktop)
       card.addEventListener('dragend', () => {
         card.classList.remove('dragging');
-      });
-      
-      // Touch events (for mobile/Android)
-      card.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevent scrolling when dragging
-        const touchEvent = e as TouchEvent;
-        draggedItem = card as HTMLElement;
-        touchActive = true;
-        draggedItem.classList.add('dragging');
-        
-        // Create a visual clone that follows the finger
-        const clone = draggedItem.cloneNode(true) as HTMLElement;
-        clone.id = 'touch-clone';
-        clone.style.position = 'absolute';
-        clone.style.zIndex = '1000';
-        clone.style.opacity = '0.9';
-        clone.style.pointerEvents = 'none';
-        clone.style.transform = 'translate3d(0,0,0)'; // Enable hardware acceleration
-        clone.style.width = `${draggedItem.offsetWidth}px`;
-        clone.style.height = `${draggedItem.offsetHeight}px`;
-        
-        // Remove all transitions for immediate response
-        clone.style.transition = 'none';
-        document.body.appendChild(clone);
-        
-        const touch = touchEvent.touches[0];
-        const offsetX = touch.clientX - draggedItem.getBoundingClientRect().left;
-        const offsetY = touch.clientY - draggedItem.getBoundingClientRect().top;
-        
-        clone.style.left = `${touch.pageX - offsetX}px`;
-        clone.style.top = `${touch.pageY - offsetY}px`;
-        clone.setAttribute('data-offset-x', offsetX.toString());
-        clone.setAttribute('data-offset-y', offsetY.toString());
+        draggedItem = null;
       });
     });
     
-    // Touch move event (for mobile/Android)
+    // TOUCH FUNCTIONALITY (MOBILE)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTap = false;
+    
+    // Touch start on card
+    cards.forEach(card => {
+      card.addEventListener('touchstart', (e: Event) => {
+         const touchEvent = e as TouchEvent;
+         const touch = touchEvent.touches[0];
+         touchStartX = touch.clientX;
+         touchStartY = touch.clientY;
+         isTap = true;
+         draggedItem = card as HTMLElement;
+         
+         // Prevent default only if this becomes a drag
+         // We'll do this in touchmove
+        });
+      });
+    
+    // Touch move anywhere
     document.addEventListener('touchmove', (e) => {
-      if (!touchActive || !draggedItem) return;
+      if (!draggedItem) return;
       
-      const touchEvent = e as TouchEvent;
-      const touch = touchEvent.touches[0];
+      const touch = e.touches[0];
       
-      // Cancel previous animation frame if one is pending
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
+      // If moved more than 10px, consider it a drag not a tap
+      if (isTap && (Math.abs(touch.clientX - touchStartX) > 10 || 
+                   Math.abs(touch.clientY - touchStartY) > 10)) {
+        isTap = false;
+        touchActive = true;
+        draggedItem.classList.add('dragging');
+        // Now prevent default to prevent scrolling
+        e.preventDefault();
       }
       
-      // Use requestAnimationFrame for smoother updates
-      rafId = requestAnimationFrame(() => {
-        const clone = document.getElementById('touch-clone');
-        
-        if (clone) {
-          const offsetX = parseInt(clone.getAttribute('data-offset-x') || '0');
-          const offsetY = parseInt(clone.getAttribute('data-offset-y') || '0');
-          clone.style.left = `${touch.pageX - offsetX}px`;
-          clone.style.top = `${touch.pageY - offsetY}px`;
-        }
-        
-        // Highlight drop zone under finger
+      if (touchActive) {
+        // Find drop zone under finger
         if (currentDropZone) {
           currentDropZone.classList.remove('active');
         }
         
         currentDropZone = getTouchDropZone(touch.clientX, touch.clientY);
+        
         if (currentDropZone) {
           currentDropZone.classList.add('active');
         }
-        
-        rafId = null;
-      });
+      }
     });
     
-    // Touch end event (for mobile/Android)
+    // Touch end anywhere
     document.addEventListener('touchend', (e) => {
-      if (!touchActive || !draggedItem) return;
+      if (!draggedItem) return;
       
-      // Cancel any pending animation frame
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      
-      // Remove the clone element
-      const clone = document.getElementById('touch-clone');
-      if (clone) {
-        document.body.removeChild(clone);
-      }
-      
-      // Get touch position
-      const touch = e.changedTouches[0];
-      const touchMoved = Math.abs(touch.clientX - draggedItem.getBoundingClientRect().left) > 10 || 
-                         Math.abs(touch.clientY - draggedItem.getBoundingClientRect().top) > 10;
-      
-      // Handle drop if over a drop zone
       if (currentDropZone) {
         currentDropZone.classList.remove('active');
+      }
+      
+      // If this was a tap (not moved much), place in first available zone
+      if (isTap) {
+        const availableZone = Array.from(dropZones).find(
+          zone => !zone.querySelector('.draggable-card')
+        ) as HTMLElement;
+        
+        if (availableZone) {
+          const article = draggedItem.dataset.article || '';
+          const gender = draggedItem.dataset.gender || '';
+          const caseType = draggedItem.dataset.case || '';
+          
+          handleDrop(availableZone, article, gender, caseType);
+        }
+      } 
+      // If this was a drag and ended over a drop zone, place it there
+      else if (touchActive && currentDropZone) {
         const article = draggedItem.dataset.article || '';
         const gender = draggedItem.dataset.gender || '';
         const caseType = draggedItem.dataset.case || '';
+        
         handleDrop(currentDropZone, article, gender, caseType);
-      } 
-      // If touch didn't move much (it was a tap, not a drag), auto-place in first available spot
-      else if (!touchMoved) {
-        const dropZones = document.querySelectorAll('.drop-zone');
+      }
+      // If drag ended outside a drop zone, find first available
+      else if (touchActive) {
         const availableZone = Array.from(dropZones).find(
           zone => !zone.querySelector('.draggable-card')
         ) as HTMLElement;
@@ -1587,13 +1574,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       // Reset state
-      draggedItem.classList.remove('dragging');
+      if (draggedItem) {
+        draggedItem.classList.remove('dragging');
+      }
       draggedItem = null;
       touchActive = false;
       currentDropZone = null;
+      isTap = false;
     });
     
-    // Desktop drop zone events
+    // DROPZONE HANDLERS (DESKTOP)
     dropZones.forEach(zone => {
       zone.addEventListener('dragover', (e) => {
         e.preventDefault();
@@ -1607,6 +1597,11 @@ document.addEventListener('DOMContentLoaded', () => {
       zone.addEventListener('drop', (e) => {
         e.preventDefault();
         zone.classList.remove('active');
+        
+        // Verify zone is empty
+        if (zone.querySelector('.draggable-card')) {
+          return;
+        }
         
         const dropEvent = e as DragEvent;
         const article = dropEvent.dataTransfer?.getData('article');
