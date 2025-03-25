@@ -5,7 +5,6 @@ A simple drag-and-drop game for practicing German case declensions (Nominative, 
 
 ## User Interface
 - Interface language: English
-- Translation directions: Hebrew ↔ German
 - Simple, minimalist design
 - Single HTML file output for easy transfer to Android device
 - Row labels should be in English for personal pronouns to avoid confusion (e.g., use "I" instead of "ich")
@@ -27,7 +26,6 @@ A simple drag-and-drop game for practicing German case declensions (Nominative, 
 - Single HTML file output with embedded CSS/JS
 - Mobile-friendly interface
 - Local storage for saving progress
-- Robust zone ID parsing that correctly handles hyphenated gender and case values
 - Custom validation for special cases like conditional forms and past tense verbs
 
 ## Game Mechanics

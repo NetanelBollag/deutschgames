@@ -7,37 +7,25 @@ export const definiteArticles: Article[] = [
     value: 'der',
     gender: 'masculine',
     case: 'nominative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ה',
-    },
+    type: 'definite'
   },
   {
     value: 'die',
     gender: 'feminine',
     case: 'nominative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ה',
-    },
+    type: 'definite'
   },
   {
     value: 'das',
     gender: 'neuter',
     case: 'nominative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ה',
-    },
+    type: 'definite'
   },
   {
     value: 'die',
     gender: 'plural',
     case: 'nominative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ה',
-    },
+    type: 'definite'
   },
   
   // Accusative
@@ -45,37 +33,25 @@ export const definiteArticles: Article[] = [
     value: 'den',
     gender: 'masculine',
     case: 'accusative',
-    type: 'definite',
-    translation: {
-      hebrew: 'את ה',
-    },
+    type: 'definite'
   },
   {
     value: 'die',
     gender: 'feminine',
     case: 'accusative',
-    type: 'definite',
-    translation: {
-      hebrew: 'את ה',
-    },
+    type: 'definite'
   },
   {
     value: 'das',
     gender: 'neuter',
     case: 'accusative',
-    type: 'definite',
-    translation: {
-      hebrew: 'את ה',
-    },
+    type: 'definite'
   },
   {
     value: 'die',
     gender: 'plural',
     case: 'accusative',
-    type: 'definite',
-    translation: {
-      hebrew: 'את ה',
-    },
+    type: 'definite'
   },
   
   // Dative
@@ -83,37 +59,25 @@ export const definiteArticles: Article[] = [
     value: 'dem',
     gender: 'masculine',
     case: 'dative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ל',
-    },
+    type: 'definite'
   },
   {
     value: 'der',
     gender: 'feminine',
     case: 'dative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ל',
-    },
+    type: 'definite'
   },
   {
     value: 'dem',
     gender: 'neuter',
     case: 'dative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ל',
-    },
+    type: 'definite'
   },
   {
     value: 'den',
     gender: 'plural',
     case: 'dative',
-    type: 'definite',
-    translation: {
-      hebrew: 'ל',
-    },
+    type: 'definite'
   },
   
   // Genitive
@@ -121,37 +85,25 @@ export const definiteArticles: Article[] = [
     value: 'des',
     gender: 'masculine',
     case: 'genitive',
-    type: 'definite',
-    translation: {
-      hebrew: 'של ה',
-    },
+    type: 'definite'
   },
   {
     value: 'der',
     gender: 'feminine',
     case: 'genitive',
-    type: 'definite',
-    translation: {
-      hebrew: 'של ה',
-    },
+    type: 'definite'
   },
   {
     value: 'des',
     gender: 'neuter',
     case: 'genitive',
-    type: 'definite',
-    translation: {
-      hebrew: 'של ה',
-    },
+    type: 'definite'
   },
   {
     value: 'der',
     gender: 'plural',
     case: 'genitive',
-    type: 'definite',
-    translation: {
-      hebrew: 'של ה',
-    },
+    type: 'definite'
   },
 ];
 
@@ -162,37 +114,25 @@ export const indefiniteArticles: Article[] = [
     value: 'ein',
     gender: 'masculine',
     case: 'nominative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'eine',
     gender: 'feminine',
     case: 'nominative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אחת',
-    },
+    type: 'indefinite'
   },
   {
     value: 'ein',
     gender: 'neuter',
     case: 'nominative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'keine',
     gender: 'plural',
     case: 'nominative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אף אחד',
-    },
+    type: 'indefinite'
   },
   
   // Accusative
@@ -200,37 +140,25 @@ export const indefiniteArticles: Article[] = [
     value: 'einen',
     gender: 'masculine',
     case: 'accusative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'eine',
     gender: 'feminine',
     case: 'accusative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אחת',
-    },
+    type: 'indefinite'
   },
   {
     value: 'ein',
     gender: 'neuter',
     case: 'accusative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'keine',
     gender: 'plural',
     case: 'accusative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'אף אחד',
-    },
+    type: 'indefinite'
   },
   
   // Dative
@@ -238,37 +166,25 @@ export const indefiniteArticles: Article[] = [
     value: 'einem',
     gender: 'masculine',
     case: 'dative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'לאחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'einer',
     gender: 'feminine',
     case: 'dative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'לאחת',
-    },
+    type: 'indefinite'
   },
   {
     value: 'einem',
     gender: 'neuter',
     case: 'dative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'לאחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'keinen',
     gender: 'plural',
     case: 'dative',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'לאף אחד',
-    },
+    type: 'indefinite'
   },
   
   // Genitive
@@ -276,37 +192,25 @@ export const indefiniteArticles: Article[] = [
     value: 'eines',
     gender: 'masculine',
     case: 'genitive',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'של אחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'einer',
     gender: 'feminine',
     case: 'genitive',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'של אחת',
-    },
+    type: 'indefinite'
   },
   {
     value: 'eines',
     gender: 'neuter',
     case: 'genitive',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'של אחד',
-    },
+    type: 'indefinite'
   },
   {
     value: 'keiner',
     gender: 'plural',
     case: 'genitive',
-    type: 'indefinite',
-    translation: {
-      hebrew: 'של אף אחד',
-    },
+    type: 'indefinite'
   },
 ];
 
@@ -317,37 +221,25 @@ export const possessiveArticles: Article[] = [
     value: 'mein',
     gender: 'masculine',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'feminine',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'mein',
     gender: 'neuter',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'plural',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   
   // Accusative
@@ -355,37 +247,25 @@ export const possessiveArticles: Article[] = [
     value: 'meinen',
     gender: 'masculine',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'את שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'feminine',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'את שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'mein',
     gender: 'neuter',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'את שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'plural',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'את שלי',
-    },
+    type: 'possessive'
   },
   
   // Dative
@@ -393,36 +273,24 @@ export const possessiveArticles: Article[] = [
     value: 'meinem',
     gender: 'masculine',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'לשלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meiner',
     gender: 'feminine',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'לשלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meinem',
     gender: 'neuter',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'לשלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meinen',
     gender: 'plural',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'לשלי',
-    },
+    type: 'possessive'
   },
 ]; 

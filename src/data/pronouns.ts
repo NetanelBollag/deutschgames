@@ -7,37 +7,25 @@ export const possessivePronouns: Article[] = [
     value: 'mein',
     gender: 'masculine',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'feminine',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'mein',
     gender: 'neuter',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'plural',
     case: 'nominative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   
   // Accusative - 1st singular (my)
@@ -45,37 +33,25 @@ export const possessivePronouns: Article[] = [
     value: 'meinen',
     gender: 'masculine',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'feminine',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'mein',
     gender: 'neuter',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meine',
     gender: 'plural',
     case: 'accusative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   
   // Dative - 1st singular (my)
@@ -83,37 +59,25 @@ export const possessivePronouns: Article[] = [
     value: 'meinem',
     gender: 'masculine',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meiner',
     gender: 'feminine',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meinem',
     gender: 'neuter',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meinen',
     gender: 'plural',
     case: 'dative',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   
   // Genitive - 1st singular (my)
@@ -121,37 +85,25 @@ export const possessivePronouns: Article[] = [
     value: 'meines',
     gender: 'masculine',
     case: 'genitive',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meiner',
     gender: 'feminine',
     case: 'genitive',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meines',
     gender: 'neuter',
     case: 'genitive',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
   {
     value: 'meiner',
     gender: 'plural',
     case: 'genitive',
-    type: 'possessive',
-    translation: {
-      hebrew: 'שלי',
-    },
+    type: 'possessive'
   },
 ];
 
@@ -162,82 +114,55 @@ export const personalPronouns: Article[] = [
     value: 'ich',
     gender: 'first-singular',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אני',
-    },
+    type: 'personal'
   },
   {
     value: 'du',
     gender: 'second-singular',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אתה/את',
-    },
+    type: 'personal'
   },
   {
     value: 'er',
     gender: 'masculine',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'הוא',
-    },
+    type: 'personal'
   },
   {
     value: 'sie',
     gender: 'feminine',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'היא',
-    },
+    type: 'personal'
   },
   {
     value: 'es',
     gender: 'neuter',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'זה',
-    },
+    type: 'personal'
   },
   {
     value: 'wir',
     gender: 'first-plural',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אנחנו',
-    },
+    type: 'personal'
   },
   {
     value: 'ihr',
     gender: 'second-plural',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אתם/אתן',
-    },
+    type: 'personal'
   },
   {
     value: 'sie',
     gender: 'third-plural',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'הם/הן',
-    },
+    type: 'personal'
   },
   {
     value: 'Sie',
     gender: 'formal',
     case: 'nominative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אדוני/גברתי',
-    },
+    type: 'personal'
   },
   
   // Accusative
@@ -245,82 +170,55 @@ export const personalPronouns: Article[] = [
     value: 'mich',
     gender: 'first-singular',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אותי',
-    },
+    type: 'personal'
   },
   {
     value: 'dich',
     gender: 'second-singular',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אותך',
-    },
+    type: 'personal'
   },
   {
     value: 'ihn',
     gender: 'masculine',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אותו',
-    },
+    type: 'personal'
   },
   {
     value: 'sie',
     gender: 'feminine',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אותה',
-    },
+    type: 'personal'
   },
   {
     value: 'es',
     gender: 'neuter',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'את זה',
-    },
+    type: 'personal'
   },
   {
     value: 'uns',
     gender: 'first-plural',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אותנו',
-    },
+    type: 'personal'
   },
   {
     value: 'euch',
     gender: 'second-plural',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אתכם/אתכן',
-    },
+    type: 'personal'
   },
   {
     value: 'sie',
     gender: 'third-plural',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'אותם/אותן',
-    },
+    type: 'personal'
   },
   {
     value: 'Sie',
     gender: 'formal',
     case: 'accusative',
-    type: 'personal',
-    translation: {
-      hebrew: 'את אדוני/גברתי',
-    },
+    type: 'personal'
   },
   
   // Dative
@@ -328,82 +226,55 @@ export const personalPronouns: Article[] = [
     value: 'mir',
     gender: 'first-singular',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לי',
-    },
+    type: 'personal'
   },
   {
     value: 'dir',
     gender: 'second-singular',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לך',
-    },
+    type: 'personal'
   },
   {
     value: 'ihm',
     gender: 'masculine',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לו',
-    },
+    type: 'personal'
   },
   {
     value: 'ihr',
     gender: 'feminine',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לה',
-    },
+    type: 'personal'
   },
   {
     value: 'ihm',
     gender: 'neuter',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לזה',
-    },
+    type: 'personal'
   },
   {
     value: 'uns',
     gender: 'first-plural',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לנו',
-    },
+    type: 'personal'
   },
   {
     value: 'euch',
     gender: 'second-plural',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לכם/לכן',
-    },
+    type: 'personal'
   },
   {
     value: 'ihnen',
     gender: 'third-plural',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'להם/להן',
-    },
+    type: 'personal'
   },
   {
     value: 'Ihnen',
     gender: 'formal',
     case: 'dative',
-    type: 'personal',
-    translation: {
-      hebrew: 'לאדוני/לגברתי',
-    },
+    type: 'personal'
   },
 ];
 
@@ -414,37 +285,25 @@ export const demonstrativePronouns: Article[] = [
     value: 'dieser',
     gender: 'masculine',
     case: 'nominative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'זה',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'diese',
     gender: 'feminine',
     case: 'nominative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'זו',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'dieses',
     gender: 'neuter',
     case: 'nominative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'זה',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'diese',
     gender: 'plural',
     case: 'nominative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'אלה',
-    },
+    type: 'demonstrative'
   },
   
   // Accusative
@@ -452,37 +311,25 @@ export const demonstrativePronouns: Article[] = [
     value: 'diesen',
     gender: 'masculine',
     case: 'accusative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'את זה',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'diese',
     gender: 'feminine',
     case: 'accusative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'את זו',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'dieses',
     gender: 'neuter',
     case: 'accusative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'את זה',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'diese',
     gender: 'plural',
     case: 'accusative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'את אלה',
-    },
+    type: 'demonstrative'
   },
   
   // Dative
@@ -490,37 +337,25 @@ export const demonstrativePronouns: Article[] = [
     value: 'diesem',
     gender: 'masculine',
     case: 'dative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'לזה',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'dieser',
     gender: 'feminine',
     case: 'dative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'לזו',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'diesem',
     gender: 'neuter',
     case: 'dative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'לזה',
-    },
+    type: 'demonstrative'
   },
   {
     value: 'diesen',
     gender: 'plural',
     case: 'dative',
-    type: 'demonstrative',
-    translation: {
-      hebrew: 'לאלה',
-    },
+    type: 'demonstrative'
   },
 ];
 
@@ -531,73 +366,49 @@ export const reflexivePronouns: Article[] = [
     value: 'mich',
     gender: 'first-singular',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמי',
-    },
+    type: 'reflexive'
   },
   {
     value: 'dich',
     gender: 'second-singular',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמך',
-    },
+    type: 'reflexive'
   },
   {
     value: 'sich',
     gender: 'masculine',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמו',
-    },
+    type: 'reflexive'
   },
   {
     value: 'sich',
     gender: 'feminine',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמה',
-    },
+    type: 'reflexive'
   },
   {
     value: 'sich',
     gender: 'neuter',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמו',
-    },
+    type: 'reflexive'
   },
   {
     value: 'uns',
     gender: 'first-plural',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמנו',
-    },
+    type: 'reflexive'
   },
   {
     value: 'euch',
     gender: 'second-plural',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמכם',
-    },
+    type: 'reflexive'
   },
   {
     value: 'sich',
     gender: 'third-plural',
     case: 'reflexive',
-    type: 'reflexive',
-    translation: {
-      hebrew: 'את עצמם',
-    },
+    type: 'reflexive'
   },
   
   // Dative reflexive pronouns
@@ -605,72 +416,48 @@ export const reflexivePronouns: Article[] = [
     value: 'mir',
     gender: 'first-singular',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמי',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'dir',
     gender: 'second-singular',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמך',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'sich',
     gender: 'masculine',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמו',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'sich',
     gender: 'feminine',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמה',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'sich',
     gender: 'neuter',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמו',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'uns',
     gender: 'first-plural',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמנו',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'euch',
     gender: 'second-plural',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמכם',
-    },
+    type: 'reflexive-dative'
   },
   {
     value: 'sich',
     gender: 'third-plural',
     case: 'reflexive',
-    type: 'reflexive-dative',
-    translation: {
-      hebrew: 'לעצמם',
-    },
+    type: 'reflexive-dative'
   },
 ]; 

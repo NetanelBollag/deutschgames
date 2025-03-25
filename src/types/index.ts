@@ -9,9 +9,6 @@ export interface Article {
   gender: Gender;
   case: Case;
   type: ArticleType;
-  translation: {
-    hebrew: string;
-  };
 }
 
 // Define the structure for a game challenge
@@ -26,7 +23,6 @@ export interface Challenge {
     columns: Array<{ label: string; case: Case }>;
   };
   correctAnswers: Article[];
-  languageDirection: 'germanToHebrew' | 'hebrewToGerman';
   rank?: number; // Challenge rank from 0-3
   ignored?: boolean; // Whether this challenge is ignored
   onLoad?: () => void; // Optional callback when challenge is loaded

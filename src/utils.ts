@@ -16,39 +16,76 @@ export const shuffleArray = <T>(array: T[]): T[] => {
  * Save challenge ranks to local storage
  */
 export const saveChallengeRanks = (gameState: GameState) => {
-  // First, load existing challenge data from local storage
-  const savedData = localStorage.getItem(STORAGE_KEYS.CHALLENGE_RANKS);
-  const challengeData: StoredChallengeData = savedData ? JSON.parse(savedData) : {};
-  
-  // Save all challenges including those not in the current rotation
-  gameState.challenges.forEach(challenge => {
-    challengeData[challenge.id] = {
-      rank: challenge.rank !== undefined ? challenge.rank : 0,
-      ignored: challenge.ignored || false
-    };
-  });
-  
-  // Add ignored challenges
-  gameState.ignoredChallenges.forEach(id => {
-    if (!challengeData[id]) {
-      challengeData[id] = {
-        rank: 3,
-        ignored: true
+  try {
+    // First, load existing challenge data from local storage
+    const savedData = localStorage.getItem(STORAGE_KEYS.CHALLENGE_RANKS);
+    const challengeData: StoredChallengeData = savedData ? JSON.parse(savedData) : {};
+    
+    // Save all challenges including those not in the current rotation
+    gameState.challenges.forEach(challenge => {
+      // Ensure the challenge has a valid rank
+      const currentRank = challenge.rank !== undefined ? challenge.rank : 0;
+      
+      // Log the update for debugging
+      console.log(`Saving challenge ${challenge.id} with rank ${currentRank}`);
+      
+      challengeData[challenge.id] = {
+        rank: currentRank,
+        ignored: challenge.ignored || false
       };
-    }
-  });
-  
-  // Add completed challenges
-  gameState.completedChallenges.forEach(id => {
-    if (!challengeData[id]) {
-      challengeData[id] = {
-        rank: 3,
-        ignored: false
-      };
-    }
-  });
-  
-  localStorage.setItem(STORAGE_KEYS.CHALLENGE_RANKS, JSON.stringify(challengeData));
+    });
+    
+    // Add ignored challenges
+    gameState.ignoredChallenges.forEach(id => {
+      if (!challengeData[id]) {
+        challengeData[id] = {
+          rank: 3,
+          ignored: true
+        };
+      } else {
+        // If it exists but is not marked as ignored, update it
+        challengeData[id].rank = 3;
+        challengeData[id].ignored = true;
+      }
+    });
+    
+    // Add completed challenges
+    gameState.completedChallenges.forEach(id => {
+      if (!challengeData[id]) {
+        challengeData[id] = {
+          rank: 3,
+          ignored: false
+        };
+      } else if (!challengeData[id].ignored) {
+        // Only update rank if not ignored
+        challengeData[id].rank = 3;
+      }
+    });
+    
+    // Save to local storage
+    localStorage.setItem(STORAGE_KEYS.CHALLENGE_RANKS, JSON.stringify(challengeData));
+    
+    // Return true to indicate success
+    return true;
+  } catch (error) {
+    console.error('Error saving challenge ranks:', error);
+    return false;
+  }
+};
+
+/**
+ * Reset all storage data
+ */
+export const resetAllStorage = (): boolean => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.CHALLENGE_RANKS);
+    localStorage.removeItem(STORAGE_KEYS.IGNORED_CHALLENGES);
+    console.log('All storage has been reset');
+    return true;
+  } catch (error) {
+    console.error('Error resetting storage:', error);
+    return false;
+  }
 };
 
 /**
@@ -60,19 +97,23 @@ export const isTouchDevice = (): boolean => {
 };
 
 /**
- * Check if a challenge is complete (all zones filled)
+ * Check if a challenge is complete (all zones filled and correct)
  */
 export const isGameChallengeComplete = (): boolean => {
   const dropZones = document.querySelectorAll('.drop-zone');
   let allFilled = true;
+  let allCorrect = true;
   
   dropZones.forEach(zone => {
     if (!zone.querySelector('.draggable-card')) {
       allFilled = false;
     }
+    if (!zone.classList.contains('correct')) {
+      allCorrect = false;
+    }
   });
   
-  return allFilled;
+  return allFilled && allCorrect;
 };
 
 /**

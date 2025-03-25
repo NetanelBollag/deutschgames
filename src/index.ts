@@ -3,7 +3,7 @@ import { Challenge, GameState, STORAGE_KEYS, StoredChallengeData } from './types
 import { definiteArticles, indefiniteArticles } from './data/articles';
 import { possessivePronouns, personalPronouns, demonstrativePronouns, reflexivePronouns } from './data/pronouns';
 import { pastTenseRegular, pastTenseIrregular, conditional, modalVerbs, futureTense, futurePerfectHaben, futurePerfectSein, seinAllTenses } from './data/verbs';
-import { shuffleArray, saveChallengeRanks, isTouchDevice, isGameChallengeComplete, getTouchDropZone } from './utils';
+import { shuffleArray, saveChallengeRanks, isTouchDevice, isGameChallengeComplete, getTouchDropZone, resetAllStorage } from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameContainer = document.getElementById('game-container');
@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: definiteArticles.filter(article => article.case === 'nominative' && article.type === 'definite'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'definite-accusative',
@@ -45,17 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
         case: 'accusative',
         tableStructure: {
           rows: [
-            { label: 'der', gender: 'masculine' },
-            { label: 'die', gender: 'feminine' },
-            { label: 'das', gender: 'neuter' },
-            { label: 'die (Pl.)', gender: 'plural' }
+            { label: 'Masculine', gender: 'masculine' },
+            { label: 'Feminine', gender: 'feminine' },
+            { label: 'Neuter', gender: 'neuter' },
+            { label: 'Plural', gender: 'plural' }
           ],
           columns: [
             { label: 'Accusative', case: 'accusative' }
           ]
         },
         correctAnswers: definiteArticles.filter(article => article.case === 'accusative' && article.type === 'definite'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'definite-dative',
@@ -75,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: definiteArticles.filter(article => article.case === 'dative' && article.type === 'definite'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Possessive pronoun challenges
@@ -97,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: possessivePronouns.filter(pronoun => pronoun.case === 'nominative'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'possessive-accusative',
@@ -117,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: possessivePronouns.filter(pronoun => pronoun.case === 'accusative'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'possessive-dative',
@@ -137,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: possessivePronouns.filter(pronoun => pronoun.case === 'dative'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Personal pronoun challenges
@@ -164,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: personalPronouns.filter(pronoun => pronoun.case === 'nominative'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'personal-accusative',
@@ -189,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: personalPronouns.filter(pronoun => pronoun.case === 'accusative'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'personal-dative',
@@ -214,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: personalPronouns.filter(pronoun => pronoun.case === 'dative'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Demonstrative pronoun challenges
@@ -236,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: demonstrativePronouns.filter(pronoun => pronoun.case === 'nominative'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'demonstrative-accusative',
@@ -256,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: demonstrativePronouns.filter(pronoun => pronoun.case === 'accusative'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'demonstrative-dative',
@@ -276,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: demonstrativePronouns.filter(pronoun => pronoun.case === 'dative'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Past tense verb challenges
@@ -300,7 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: pastTenseRegular,
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'past-tense-sein',
@@ -322,7 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: pastTenseIrregular.filter(verb => verb.type === 'sein'),
-        languageDirection: 'germanToHebrew',
       },
       {
         id: 'past-tense-haben',
@@ -344,7 +330,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: pastTenseIrregular.filter(verb => verb.type === 'haben'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Conditional form challenges
@@ -368,7 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: conditional,
-        languageDirection: 'germanToHebrew',
         customValidation: (zoneGender: string, zoneCase: string, article: string) => {
           // Map of expected values for each gender
           const expectedValues: Record<string, string> = {
@@ -413,7 +397,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: modalVerbs,
-        languageDirection: 'germanToHebrew',
         customValidation: (zoneGender: string, zoneCase: string, article: string) => {
           // Map of expected values for each gender
           const expectedValues: Record<string, string> = {
@@ -460,7 +443,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: futureTense,
-        languageDirection: 'germanToHebrew',
       },
       
       // Genitive case challenge
@@ -482,7 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: definiteArticles.filter(article => article.case === 'genitive' && article.type === 'definite'),
-        languageDirection: 'germanToHebrew',
       },
       
       {
@@ -503,7 +484,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: indefiniteArticles.filter(article => article.case === 'genitive' && article.type === 'indefinite'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Possessive pronoun in genitive
@@ -525,7 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: possessivePronouns.filter(pronoun => pronoun.case === 'genitive'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Reflexive pronouns in accusative
@@ -551,7 +530,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: reflexivePronouns.filter(pronoun => pronoun.type === 'reflexive'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Reflexive pronouns in dative
@@ -577,7 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: reflexivePronouns.filter(pronoun => pronoun.type === 'reflexive-dative'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Future Perfect with haben
@@ -601,7 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: futurePerfectHaben,
-        languageDirection: 'germanToHebrew',
       },
       
       // Future Perfect with sein
@@ -625,7 +601,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: futurePerfectSein,
-        languageDirection: 'germanToHebrew',
       },
       
       // Sein in present tense
@@ -649,7 +624,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: seinAllTenses.filter(verb => verb.type === 'sein-present'),
-        languageDirection: 'germanToHebrew',
       },
       
       // Sein in perfect tense
@@ -673,7 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         correctAnswers: seinAllTenses.filter(verb => verb.type === 'sein-perfect'),
-        languageDirection: 'germanToHebrew',
       }
     ];
   };
@@ -938,7 +911,12 @@ document.addEventListener('DOMContentLoaded', () => {
       
       <div id="challenge-selector-overlay" class="challenge-selector-overlay" style="display: none;"></div>
       <div id="challenge-selector" class="challenge-selector" style="display: none;">
-        <h3>Select Challenge</h3>
+        <div class="challenge-selector-header">
+          <h3>Select Challenge</h3>
+          <button id="reset-storage" class="reset-storage-btn" title="Reset all progress">
+            <span class="reset-icon">↺</span>
+          </button>
+        </div>
         <input type="text" id="challenge-search" placeholder="Search challenges...">
         <div class="challenge-list">
           ${createChallenges().map(c => {
@@ -964,8 +942,20 @@ document.addEventListener('DOMContentLoaded', () => {
               statusText = '▶ Current';
             }
             
+            // Get the challenge rank
+            const challengeData = localStorage.getItem(STORAGE_KEYS.CHALLENGE_RANKS);
+            const savedData = challengeData ? JSON.parse(challengeData) : {};
+            const rank = savedData[c.id] ? savedData[c.id].rank : 0;
+            
+            // Determine rank class
+            const rankClass = rank === 0 ? 'rank-initial' : 
+                             rank === 1 ? 'rank-bronze' : 
+                             rank === 2 ? 'rank-silver' : 
+                             'rank-gold';
+            
             return `
               <div class="challenge-item ${statusClass}" data-id="${c.id}">
+                <span class="rank-card ${rankClass}">${rank}</span>
                 <div class="challenge-title">${c.title}</div>
                 <div class="challenge-details">
                   <span class="challenge-type">${c.articleType}, ${c.case}</span>
@@ -1168,10 +1158,83 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
+      
+      // Add reset storage button functionality
+      const resetStorageButton = document.getElementById('reset-storage');
+      if (resetStorageButton) {
+        resetStorageButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Create and show confirmation dialog
+          showConfirmationDialog(
+            'Reset Progress', 
+            'Are you sure you want to reset all your progress? This action cannot be undone.',
+            () => {
+              // User confirmed - perform reset
+              resetAllStorage();
+              
+              // Reset game state
+              gameState = initializeGameState();
+              
+              // Close the challenge selector
+              if (challengeSelector) {
+                challengeSelector.style.display = 'none';
+                if (overlay) overlay.style.display = 'none';
+              }
+              
+              // Render the challenge again
+              renderChallenge();
+            }
+          );
+        });
+      }
     }
     
     // Setup drag and drop functionality
     setupDragAndDrop();
+  };
+  
+  // Function to show a confirmation dialog
+  const showConfirmationDialog = (title: string, message: string, onConfirm: () => void) => {
+    // Create overlay
+    const dialogOverlay = document.createElement('div');
+    dialogOverlay.className = 'confirmation-dialog-overlay';
+    
+    // Create dialog
+    const dialog = document.createElement('div');
+    dialog.className = 'confirmation-dialog';
+    
+    // Create dialog content
+    dialog.innerHTML = `
+      <h3>${title}</h3>
+      <p>${message}</p>
+      <div class="confirmation-buttons">
+        <button class="cancel-btn">Cancel</button>
+        <button class="confirm-btn">Reset</button>
+      </div>
+    `;
+    
+    // Add event listeners
+    const confirmBtn = dialog.querySelector('.confirm-btn');
+    const cancelBtn = dialog.querySelector('.cancel-btn');
+    
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', () => {
+        document.body.removeChild(dialogOverlay);
+        onConfirm();
+      });
+    }
+    
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', () => {
+        document.body.removeChild(dialogOverlay);
+      });
+    }
+    
+    // Add dialog to overlay and overlay to body
+    dialogOverlay.appendChild(dialog);
+    document.body.appendChild(dialogOverlay);
   };
   
   // Function to handle drop of a card
@@ -1188,7 +1251,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const zoneId = zone.id;
     
     // Get the correct zone gender and case by referencing the tableStructure
-    // This ensures we parse the ID correctly even when gender or case contains hyphens
     let zoneGender = '';
     let zoneCase = '';
     
@@ -1209,20 +1271,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (zoneGender && zoneCase) break; // Stop if we found a match
     }
     
-    // Fallback to the old parsing method if no match found
+    // If no match found in the table structure, extract from the ID directly
     if (!zoneGender || !zoneCase) {
-      console.warn(`Unable to match zone ID ${zoneId} to tableStructure, using fallback parsing`);
-      // Old parsing logic as fallback
-      const idWithoutPrefix = zoneId.replace(/^drop-/, '');
-      const lastHyphenIndex = idWithoutPrefix.lastIndexOf('-');
-      
-      if (lastHyphenIndex !== -1) {
-        zoneGender = idWithoutPrefix.substring(0, lastHyphenIndex);
-        zoneCase = idWithoutPrefix.substring(lastHyphenIndex + 1);
-      } else {
-        const parts = zoneId.split('-');
-        zoneGender = parts.length > 1 ? parts[1] : '';
-        zoneCase = parts.length > 2 ? parts[2] : '';
+      const parts = zoneId.split('-');
+      if (parts.length >= 3) {
+        zoneGender = parts[1];
+        zoneCase = parts[2];
       }
     }
     
@@ -1449,6 +1503,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Only if all answers are correct, increment rank and proceed
       const challenge = gameState.challenges[gameState.currentChallengeIndex];
       
+      // Check current rank to see if it's already been incremented in this session
+      const previousRank = challenge.rank !== undefined ? challenge.rank : 0;
+      
       // Increment rank of completed challenge
       if (challenge.rank !== undefined) {
         challenge.rank++;
@@ -1465,6 +1522,48 @@ document.addEventListener('DOMContentLoaded', () => {
       // Save to local storage
       saveChallengeRanks(gameState);
       
+      // Update the rank card display to show new rank immediately
+      const rankCard = document.querySelector('.rank-stats .rank-card');
+      if (rankCard) {
+        // Update the rank card class and text
+        rankCard.className = `rank-card ${challenge.rank === 1 ? 'rank-bronze' : challenge.rank === 2 ? 'rank-silver' : 'rank-gold'}`;
+        rankCard.textContent = challenge.rank.toString();
+      }
+      
+      console.log(`Challenge rank updated: ${previousRank} → ${challenge.rank}`);
+      
+      // Recalculate rank counts to update UI
+      const rankCounts: Record<string | number, number> = {
+        0: 0, 1: 0, 2: 0, 3: 0, ignored: 0
+      };
+      
+      // Count all challenges by rank
+      createChallenges().forEach(c => {
+        const challengeData = localStorage.getItem(STORAGE_KEYS.CHALLENGE_RANKS);
+        const savedData = challengeData ? JSON.parse(challengeData) : {};
+        
+        if (savedData[c.id] && savedData[c.id].ignored) {
+          rankCounts.ignored++;
+        } else if (savedData[c.id] && savedData[c.id].rank !== undefined) {
+          rankCounts[savedData[c.id].rank]++;
+        } else {
+          rankCounts[0]++; // Default rank is 0
+        }
+      });
+      
+      // Update rank counts in UI
+      const rankCountDisplay = document.querySelector('.rank-stats span');
+      if (rankCountDisplay) {
+        rankCountDisplay.innerHTML = `
+          Challenge: 
+          <span class="rank-card ${challenge.rank === 0 ? 'rank-initial' : challenge.rank === 1 ? 'rank-bronze' : challenge.rank === 2 ? 'rank-silver' : 'rank-gold'}">${challenge.rank}</span>
+          | Completed cards: 
+          <span class="rank-bronze rank-card">1</span> ${rankCounts[1]} 
+          <span class="rank-silver rank-card">2</span> ${rankCounts[2]} 
+          <span class="rank-gold rank-card">3</span> ${rankCounts[3] + rankCounts.ignored}
+        `;
+      }
+      
       // Short delay before moving to next challenge
       setTimeout(() => {
         // Move to next challenge or reset if at the end
@@ -1480,7 +1579,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (allFilled && !allCorrect) {
       // If all zones are filled but some answers are incorrect,
       // add a small shake animation to the incorrect answers
-      document.querySelectorAll('.drop-zone.incorrect').forEach(zone => {
+      document.querySelectorAll('.drop-zone:not(.correct)').forEach(zone => {
         zone.classList.add('shake-error');
         setTimeout(() => {
           zone.classList.remove('shake-error');

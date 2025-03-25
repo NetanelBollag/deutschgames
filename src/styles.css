@@ -6,22 +6,28 @@
 }
 
 :root {
-  --primary-color: #4a69bd;
+  --primary-color: #4A69BD;
+  --primary-color-rgb: 74, 105, 189;
   --primary-dark: #3b5998;
   --primary-light: #6a89cc;
-  --accent-color: #f39c12;
-  --text-color: #2c3e50;
+  --accent-color: #f39c12;;
+  --accent-color-soft: #eabe78;;
+  --text-color: #2d3436;
+  --secondary-text: #636e72;
   --light-text: #ecf0f1;
-  --background: #f5f7fa;
+  --background-color: #f5f6fa;
   --card-bg: #ffffff;
   --correct-color: #27ae60;
   --incorrect-color: #e74c3c;
-  --border-radius: 8px;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  --transition: all 0.15s cubic-bezier(0.2, 0, 0.1, 1);
   --bronze-color: #cd7f32;
-  --silver-color: #c0c0c0;
-  --gold-color: #ffd700;
+  --silver-color: #C0C0C0;
+  --gold-color: #FFD700;
+  --error-color: #e74c3c;
+  --success-color: #2ecc71;
+  --border-radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+  --instruction-color: #6c5ce7;
 }
 
 /* Instruction frame */
@@ -106,7 +112,7 @@ body {
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
-  background-color: var(--background);
+  background-color: var(--background-color);
   padding: 0;
   margin: 0;
 }
@@ -114,7 +120,7 @@ body {
 #app {
   max-width: 100%;
   margin: 0 auto;
-  background-color: var(--background);
+  background-color: var(--background-color);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -570,7 +576,7 @@ body.touch-device .draggable-card {
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1e2a38;
+    --background-color: #1e2a38;
     --card-bg: #2c3e50;
     --text-color: #ecf0f1;
     --light-text: #ffffff;
@@ -602,76 +608,219 @@ body.touch-device .draggable-card {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  max-width: 80%;
-  width: 300px;
+  width: 90%;
+  max-width: 600px;
   max-height: 80vh;
-  overflow-y: auto;
-  z-index: 101;
+  background-color: var(--card-bg);
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  border-radius: var(--border-radius);
+  z-index: 1001;
+  padding: 1rem;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-#challenge-search {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+.challenge-selector[style*="display: block"] {
+  display: flex !important;
 }
 
-.challenge-selector h3 {
+/* Add styles for the challenge selector header with reset button */
+.challenge-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
+}
+
+.challenge-selector-header h3 {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.reset-storage-btn {
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--secondary-text);
+}
+
+.reset-storage-btn:hover {
+  background-color: var(--error-color);
+  color: white;
+  border-color: var(--error-color);
+}
+
+.reset-icon {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Confirmation dialog styles */
+.confirmation-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-dialog {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 400px;
   text-align: center;
 }
 
-.challenge-selector input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
+.confirmation-dialog h3 {
+  margin-top: 0;
+  color: var(--text-color);
+}
+
+.confirmation-dialog p {
+  margin: 1rem 0;
+  color: var(--secondary-text);
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancel-btn, .confirm-btn {
+  padding: 0.7rem 1.5rem;
+  border: none;
   border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cancel-btn {
+  background-color: #f1f1f1;
+  color: var(--text-color);
+}
+
+.confirm-btn {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #e1e1e1;
+}
+
+.confirm-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Dark mode support for confirmation dialog */
+@media (prefers-color-scheme: dark) {
+  .cancel-btn {
+    background-color: #34495e;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #2c3e50;
+  }
+}
+
+.challenge-selector h3 {
+  margin-top: 0;
+  color: var(--text-color);
+}
+
+.challenge-selector input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  width: 100%;
 }
 
 .challenge-list {
-  max-height: 50vh;
   overflow-y: auto;
+  max-height: 60vh;
+  padding-right: 0.5rem;
 }
 
 .challenge-item {
   padding: 0.8rem;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .challenge-item:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.challenge-item .rank-card {
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  min-width: 24px;
+  height: 24px;
+  font-size: 0.9rem;
 }
 
 .challenge-title {
-  font-weight: bold;
-  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 0.2rem;
+  flex-grow: 1;
 }
 
 .challenge-details {
   display: flex;
-  justify-content: space-between;
   font-size: 0.8rem;
-  color: #666;
+  color: var(--secondary-text);
+  justify-content: space-between;
+  width: 100%;
+}
+
+.challenge-type {
+  color: var(--secondary-text);
+}
+
+.challenge-status {
+  font-weight: 500;
+  margin-left: 0.5rem;
 }
 
 .status-completed {
-  background-color: rgba(39, 174, 96, 0.1);
+  border-left: 4px solid var(--gold-color);
 }
 
 .status-ignored {
-  background-color: rgba(231, 76, 60, 0.1);
+  border-left: 4px solid var(--gold-color);
+  opacity: 0.7;
 }
 
 .status-current {
-  background-color: rgba(74, 105, 189, 0.1);
+  border-left: 4px solid var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.1);
 }
 
 /* Make the popup scrollable on small screens */
