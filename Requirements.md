@@ -1,7 +1,9 @@
 # German Learning Game Requirements
 
 ## Overview
-A simple drag-and-drop game for practicing German case declensions (Nominative, Accusative, Dative) and verb conjugations. The user will match correct declensions or verb forms to their position in grammar tables.
+A simple game for practicing German grammar through multiple minigames:
+1. A drag-and-drop game for practicing German case declensions and verb conjugations
+2. Flashcards for practicing German nouns with gender and plural forms
 
 ## User Interface
 - Interface language: English
@@ -19,6 +21,7 @@ A simple drag-and-drop game for practicing German case declensions (Nominative, 
   - Case declensions (Nominative, Accusative, Dative)
   - Verb conjugations (Regular, Irregular, Modal verbs)
   - Verb tenses (Present, Past, Future, Conditional)
+  - Noun gender and plural forms through flashcards
 
 ## Technical Requirements
 - Written in TypeScript, compiled to JavaScript
@@ -62,12 +65,28 @@ A simple drag-and-drop game for practicing German case declensions (Nominative, 
 4. Immediate visual feedback indicates correct placement
 5. Progress to next challenge after table completion
 
+## Noun Flashcards Minigame
+- Present English nouns as flashcards
+- User types the German translation with:
+  - Correct gender prefix (der, die, das)
+  - Correct plural form
+- Examples:
+  - "Book" → "das Buch, die Bücher"
+  - "Cat" → "die Katze, die Katzen"
+  - "Man" → "der Mann, die Männer"
+- Immediate feedback on correctness
+- Show correct answer when user makes a mistake
+- Support for common noun categories (people, animals, objects, places, abstract concepts)
+- Follow the same ranking system as other challenges
+- Option to view hint (first letter or plural ending pattern) after an incorrect attempt
+
 ## Content
 - Include all declension tables as shown in the provided data
 - Cover all three cases: Nominative, Accusative, Dative
 - Include definite articles, indefinite articles, possessive pronouns, personal pronouns, and demonstrative pronouns
 - Include verb conjugations for regular and irregular verbs
 - Include verb tenses: present, past, future, and conditional
+- Include a diverse collection of common German nouns with their genders and plural forms
 
 ## Things to Avoid
 - Complex animations or graphics that increase file size
