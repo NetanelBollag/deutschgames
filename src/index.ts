@@ -890,14 +890,15 @@ document.addEventListener('DOMContentLoaded', () => {
     gameContainer.innerHTML = `
       <div class="progress-bar-container">
         <div class="progress-bar">
-          <div class="progress-initial" style="width: ${initialPercent}%"></div>
-          <div class="progress-bronze" style="width: ${bronzePercent}%"></div>
-          <div class="progress-silver" style="width: ${silverPercent}%"></div>
           <div class="progress-gold" style="width: ${goldPercent}%"></div>
+          <div class="progress-silver" style="width: ${silverPercent}%"></div>
+          <div class="progress-bronze" style="width: ${bronzePercent}%"></div>
+          <div class="progress-initial" style="width: ${initialPercent}%"></div>
         </div>
       </div>
       
       <header>
+        <div class="instruction-frame">Place correctly</div>
         <h2>${challenge.title}</h2>
       </header>
       
@@ -908,6 +909,10 @@ document.addEventListener('DOMContentLoaded', () => {
               ${tableRows}
             </tbody>
           </table>
+        </div>
+        
+        <div id="success-indicator" class="success-indicator" style="display: none;">
+          ✓
         </div>
         
         <div class="card-container">
@@ -1421,15 +1426,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const checkChallengeComplete = () => {
     const dropZones = document.querySelectorAll('.drop-zone');
     let allFilled = true;
+    let allCorrect = true;
     
     dropZones.forEach(zone => {
       if (!zone.querySelector('.draggable-card')) {
         allFilled = false;
       }
+      if (!zone.classList.contains('correct')) {
+        allCorrect = false;
+      }
     });
     
-    if (allFilled) {
-      // If all zones are filled, auto-advance to next challenge
+    // Show success indicator if all answers are correct
+    const successIndicator = document.getElementById('success-indicator');
+    if (allFilled && allCorrect && successIndicator) {
+      successIndicator.style.display = 'flex';
+    } else if (successIndicator) {
+      successIndicator.style.display = 'none';
+    }
+    
+    if (allFilled && allCorrect) {
+      // Only if all answers are correct, increment rank and proceed
       const challenge = gameState.challenges[gameState.currentChallengeIndex];
       
       // Increment rank of completed challenge
@@ -1459,7 +1476,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Render the next challenge
         renderChallenge();
-      }, 400);
+      }, 1000);
+    } else if (allFilled && !allCorrect) {
+      // If all zones are filled but some answers are incorrect,
+      // add a small shake animation to the incorrect answers
+      document.querySelectorAll('.drop-zone.incorrect').forEach(zone => {
+        zone.classList.add('shake-error');
+        setTimeout(() => {
+          zone.classList.remove('shake-error');
+        }, 500);
+      });
     }
   };
   

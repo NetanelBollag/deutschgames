@@ -349,9 +349,10 @@ export const futureTense: Article[] = [
 ];
 
 // Future Perfect tense (Futur II) with haben
+// Example: ___ gegessen haben
 export const futurePerfectHaben: Article[] = [
   {
-    value: 'werde gegessen haben',
+    value: 'werde',
     gender: 'first-singular',
     case: 'future-perfect',
     type: 'future-perfect',
@@ -360,7 +361,7 @@ export const futurePerfectHaben: Article[] = [
     },
   },
   {
-    value: 'wirst gegessen haben',
+    value: 'wirst',
     gender: 'second-singular',
     case: 'future-perfect',
     type: 'future-perfect',
@@ -369,7 +370,7 @@ export const futurePerfectHaben: Article[] = [
     },
   },
   {
-    value: 'wird gegessen haben',
+    value: 'wird',
     gender: 'third-singular',
     case: 'future-perfect',
     type: 'future-perfect',
@@ -378,7 +379,7 @@ export const futurePerfectHaben: Article[] = [
     },
   },
   {
-    value: 'werden gegessen haben',
+    value: 'werden',
     gender: 'first-plural',
     case: 'future-perfect',
     type: 'future-perfect',
@@ -387,7 +388,7 @@ export const futurePerfectHaben: Article[] = [
     },
   },
   {
-    value: 'werdet gegessen haben',
+    value: 'werdet',
     gender: 'second-plural',
     case: 'future-perfect',
     type: 'future-perfect',
@@ -396,7 +397,7 @@ export const futurePerfectHaben: Article[] = [
     },
   },
   {
-    value: 'werden gegessen haben',
+    value: 'werden',
     gender: 'third-plural',
     case: 'future-perfect',
     type: 'future-perfect',
@@ -407,9 +408,10 @@ export const futurePerfectHaben: Article[] = [
 ];
 
 // Future Perfect tense (Futur II) with sein
+// Example: ___ gekommen sein
 export const futurePerfectSein: Article[] = [
   {
-    value: 'werde gekommen sein',
+    value: 'werde',
     gender: 'first-singular',
     case: 'future-perfect',
     type: 'future-perfect-sein',
@@ -418,7 +420,7 @@ export const futurePerfectSein: Article[] = [
     },
   },
   {
-    value: 'wirst gekommen sein',
+    value: 'wirst',
     gender: 'second-singular',
     case: 'future-perfect',
     type: 'future-perfect-sein',
@@ -427,7 +429,7 @@ export const futurePerfectSein: Article[] = [
     },
   },
   {
-    value: 'wird gekommen sein',
+    value: 'wird',
     gender: 'third-singular',
     case: 'future-perfect',
     type: 'future-perfect-sein',
@@ -436,7 +438,7 @@ export const futurePerfectSein: Article[] = [
     },
   },
   {
-    value: 'werden gekommen sein',
+    value: 'werden',
     gender: 'first-plural',
     case: 'future-perfect',
     type: 'future-perfect-sein',
@@ -445,7 +447,7 @@ export const futurePerfectSein: Article[] = [
     },
   },
   {
-    value: 'werdet gekommen sein',
+    value: 'werdet',
     gender: 'second-plural',
     case: 'future-perfect',
     type: 'future-perfect-sein',
@@ -454,7 +456,7 @@ export const futurePerfectSein: Article[] = [
     },
   },
   {
-    value: 'werden gekommen sein',
+    value: 'werden',
     gender: 'third-plural',
     case: 'future-perfect',
     type: 'future-perfect-sein',
@@ -523,8 +525,9 @@ export const seinAllTenses: Article[] = [
   },
   
   // Perfect Tense (Perfekt)
+  // Example: ___ gewesen
   {
-    value: 'bin gewesen',
+    value: 'bin',
     gender: 'first-singular',
     case: 'perfect',
     type: 'sein-perfect',
@@ -533,7 +536,7 @@ export const seinAllTenses: Article[] = [
     },
   },
   {
-    value: 'bist gewesen',
+    value: 'bist',
     gender: 'second-singular',
     case: 'perfect',
     type: 'sein-perfect',
@@ -542,7 +545,7 @@ export const seinAllTenses: Article[] = [
     },
   },
   {
-    value: 'ist gewesen',
+    value: 'ist',
     gender: 'third-singular',
     case: 'perfect',
     type: 'sein-perfect',
@@ -551,7 +554,7 @@ export const seinAllTenses: Article[] = [
     },
   },
   {
-    value: 'sind gewesen',
+    value: 'sind',
     gender: 'first-plural',
     case: 'perfect',
     type: 'sein-perfect',
@@ -560,7 +563,7 @@ export const seinAllTenses: Article[] = [
     },
   },
   {
-    value: 'seid gewesen',
+    value: 'seid',
     gender: 'second-plural',
     case: 'perfect',
     type: 'sein-perfect',
@@ -569,7 +572,7 @@ export const seinAllTenses: Article[] = [
     },
   },
   {
-    value: 'sind gewesen',
+    value: 'sind',
     gender: 'third-plural',
     case: 'perfect',
     type: 'sein-perfect',
